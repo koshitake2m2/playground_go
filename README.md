@@ -16,6 +16,14 @@ goenv local 1.22.5
 ## Run
 
 ```bash
+# Run scripts
 go run ./samples/hello.go
-cd workspace && go run ./main
+
+# Run workspace
+cd workspace
+go run ./main
+
+# Test
+cd modules/calc
+go test -v
 ```
