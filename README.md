@@ -17,4 +17,5 @@ goenv local 1.22.5
 
 ```bash
 go run ./samples/hello.go
+cd workspace && go run ./main
 ```
