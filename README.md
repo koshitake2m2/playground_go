@@ -16,6 +16,6 @@ goenv local 1.22.5
 ## Run
 
 ```bash
-# Run scripts
 go run ./samples/hello.go
+go fmt ./samples/hello.go
 ```
