@@ -18,12 +18,4 @@ goenv local 1.22.5
 ```bash
 # Run scripts
 go run ./samples/hello.go
-
-# Run workspace
-cd workspace
-go run ./main
-
-# Test
-cd modules/calc
-go test -v
 ```
