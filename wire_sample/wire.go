@@ -17,20 +17,21 @@ var animalSet = wire.NewSet(
 	wire.Bind(new(Animal), new(*Dog)),
 )
 
-func provideMySingleton() *MySingleton {
-	return &MySingleton{Name: "Bob"}
+func provideMySingleton() MySingleton {
+	return MySingleton{Name: "Bob"}
 }
 
 var mySingletonSet = wire.NewSet(
 	provideMySingleton,
 )
 
-func NewAnimalService(animal Animal, mySingleton *MySingleton) AnimalService {
-	return AnimalService{
-		Animal:      animal,
-		MySingleton: *mySingleton,
-	}
-}
+// 以下の代わりに wire.Struct を使う
+// func NewAnimalService(animal Animal, mySingleton MySingleton) AnimalService {
+// 	return AnimalService{
+// 		Animal:      animal,
+// 		MySingleton: mySingleton,
+// 	}
+// }
 
 type DependenciesSet struct {
 	AnimalService AnimalService
@@ -40,7 +41,8 @@ func Initialize() (*DependenciesSet, error) {
 	wire.Build(
 		animalSet,
 		mySingletonSet,
-		NewAnimalService,
+		// NewAnimalService,
+		wire.Struct(new(AnimalService), "*"),
 		wire.Struct(new(DependenciesSet), "*"),
 	)
 	return nil, nil

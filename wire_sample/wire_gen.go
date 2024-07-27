@@ -15,7 +15,10 @@ import (
 func Initialize() (*DependenciesSet, error) {
 	dog := provideDog()
 	mySingleton := provideMySingleton()
-	animalService := NewAnimalService(dog, mySingleton)
+	animalService := AnimalService{
+		Animal:      dog,
+		MySingleton: mySingleton,
+	}
 	dependenciesSet := &DependenciesSet{
 		AnimalService: animalService,
 	}
@@ -33,20 +36,13 @@ var animalSet = wire.NewSet(
 	provideDog, wire.Bind(new(Animal), new(*Dog)),
 )
 
-func provideMySingleton() *MySingleton {
-	return &MySingleton{Name: "Bob"}
+func provideMySingleton() MySingleton {
+	return MySingleton{Name: "Bob"}
 }
 
 var mySingletonSet = wire.NewSet(
 	provideMySingleton,
 )
-
-func NewAnimalService(animal Animal, mySingleton *MySingleton) AnimalService {
-	return AnimalService{
-		Animal:      animal,
-		MySingleton: *mySingleton,
-	}
-}
 
 type DependenciesSet struct {
 	AnimalService AnimalService
