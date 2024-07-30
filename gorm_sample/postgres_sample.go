@@ -12,6 +12,5 @@ func RunPostgres() {
 		PreferSimpleProtocol: true,
 	}), &gorm.Config{})
 
-	db.AutoMigrate(&Product{})
-	db.Create(&Product{Code: "D42", Price: 100})
+	db.Create(&Article{ID: 4, Author: "author4", Title: "title4", Description: "description4"})
 }
