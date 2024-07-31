@@ -44,7 +44,7 @@ jobs:
           for p in `find . -name go.mod | xargs dirname`; do
             cd $p;
             result_p=$(gofmt -l .)
-            [ -z "$result_p" ] || echo "$result_p" && result=false;
+            [ -z "${result_p}" ] || (echo "${result_p}" && result=false);
             cd $base_dir;
           done
           [ $result = true ] || exit 1
