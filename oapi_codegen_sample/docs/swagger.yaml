@@ -1,0 +1,19 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  title: Recommend Swaggo API
+  version: "1.0"
+paths:
+  /hello:
+    get:
+      description: Return "Hello, World!"
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Return "Hello, World!"
+swagger: "2.0"

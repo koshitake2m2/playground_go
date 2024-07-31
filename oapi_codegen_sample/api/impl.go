@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"oapi_codegen_sample/petstore"
 
+	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 )
 
@@ -37,4 +38,8 @@ func (s ServerInterfaceImpl) FindPetByID(ctx echo.Context, id int64) error {
 
 func NewServer() petstore.ServerInterface {
 	return ServerInterfaceImpl{}
+}
+
+func GetSwagger() (swagger *openapi3.T, err error) {
+	return petstore.GetSwagger()
 }
