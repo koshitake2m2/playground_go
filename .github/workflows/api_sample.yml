@@ -46,7 +46,7 @@ jobs:
             [ -z "$(gofmt -l .)" ] || result=false;
             cd $base_dir;
           done
-          [ $result = false ] || exit 1
+          [ $result = true ] || exit 1
 
   test:
     runs-on: ubuntu-latest

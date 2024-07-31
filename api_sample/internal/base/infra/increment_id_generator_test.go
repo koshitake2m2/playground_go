@@ -10,7 +10,7 @@ func TestGenerate(t *testing.T) {
 	if g.Generate() != 1 {
 		t.Fatal("generate() should be 1")
 	}
-	if g.Generate() != 3 {
+	if g.Generate() != 2 {
 		t.Fatal("generate() should be 2")
 	}
 }
