@@ -23,10 +23,20 @@ jobs:
       - name: Build
         run: |
           pwd
-          cd api_sample/cmd/app
+          cd api_sample/cmd/api
           go build -v ./...
 
-      - name: fmt all
+  fmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.5"
+
+      - name: Format
         run: |
           pwd
           ls
@@ -36,7 +46,17 @@ jobs:
           base_dir=$(pwd)
           for p in `find . -name go.mod | xargs dirname`; do echo $p; cd $p; go fmt; cd $base_dir; done
 
-      - name: Test all
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.22.5"
+
+      - name: Test
         run: |
           pwd
           ls
