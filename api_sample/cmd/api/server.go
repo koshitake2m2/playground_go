@@ -1,7 +1,7 @@
 package main
 
 import (
-	todo "api_sample/internal/todo/presentation"
+	"api_sample/internal/todo/presentation"
 	"fmt"
 	"net/http"
 
@@ -15,7 +15,8 @@ func hello(c echo.Context) error {
 }
 func main() {
 	e := echo.New()
-	todo.RegisterTodoController(e)
+	tc := presentation.TodoController{}
+	tc.RegisterTodoController(e)
 
 	e.GET("/hello", hello)
 
