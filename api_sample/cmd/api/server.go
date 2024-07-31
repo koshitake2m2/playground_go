@@ -1,22 +1,20 @@
 package main
 
 import (
-	"api_sample/internal/todo/presentation"
-	"fmt"
 	"net/http"
+
+	"api_sample/cmd/api/di"
 
 	"github.com/labstack/echo/v4"
 )
 
 func hello(c echo.Context) error {
-	id := c.Param("id")
-	fmt.Println("hh334554")
-	return c.String(http.StatusOK, id)
+	return c.String(http.StatusOK, "hello world")
 }
 func main() {
 	e := echo.New()
-	tc := presentation.TodoController{}
-	tc.RegisterTodoController(e)
+	dependencies, _ := di.Initialize()
+	dependencies.TodoController.RegisterController(e)
 
 	e.GET("/hello", hello)
 

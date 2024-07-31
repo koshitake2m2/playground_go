@@ -1,23 +1,31 @@
 package presentation
 
 import (
+	basePresentation "api_sample/internal/base/presentation"
+	"api_sample/internal/todo/usecase"
+	"fmt"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 )
 
 type TodoController struct {
+	AuthenticationHelper basePresentation.AuthenticationHelper
+	TodoUsecase          usecase.TodoUsecase
 }
 
 /*
-curl -X GET http://localhost:8080/todos/
+curl -X GET http://localhost:8080/todos/ -b "SESSION_ID=SESSION_ID_USER_1"
 */
 func (tc TodoController) listTodos(c echo.Context) error {
-	response := TodoListResponse{Todos: []TodoResponse{
-		{Id: 1, UserId: 1, Title: "title", Status: "waiting"},
-		{Id: 2, UserId: 2, Title: "title2", Status: "doing"},
-	}}
-	// return c.String(http.StatusOK, "aa")
+	user, err := tc.AuthenticationHelper.Authenticate(c)
+	if err != nil {
+		return err
+	}
+	fmt.Println("login user id:", user.UserId)
+
+	todos := tc.TodoUsecase.ListTodos()
+	response := ConvertTodoListResponse(todos)
 	return c.JSON(http.StatusOK, response)
 }
 
@@ -52,9 +60,9 @@ func (tc TodoController) deleteTodo(c echo.Context) error {
 	return c.String(http.StatusOK, id)
 }
 
-func (tc TodoController) RegisterTodoController(e *echo.Echo) {
+func (tc TodoController) RegisterController(e *echo.Echo) {
 	e.GET("/todos", tc.listTodos)
-	e.GET("/todos:id", tc.showTodo)
+	e.GET("/todos/:id", tc.showTodo)
 	e.POST("/todos", tc.createTodo)
 	e.PUT("/todos/:id", tc.updateTodo)
 	e.DELETE("/todos/:id", tc.deleteTodo)
