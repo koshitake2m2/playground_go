@@ -23,15 +23,16 @@ jobs:
       - name: Build
         run: |
           pwd
-          ls
-          cd api_sample
-          # go build -v ./...
+          cd api_sample/cmd/app
+          go build -v ./...
 
       - name: fmt all
         run: |
           pwd
           ls
           cd api_sample
+          find . -name go.mod | xargs dirname
+          echo "hello"
           base_dir=$(pwd)
           for p in `find . -name go.mod | xargs dirname`; do echo $p; cd $p; go fmt; cd $base_dir; done
 
