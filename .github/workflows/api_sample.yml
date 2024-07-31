@@ -38,20 +38,15 @@ jobs:
 
       - name: Format
         run: |
-          pwd
-          ls
           cd api_sample
-          find . -name go.mod | xargs dirname
-          echo "hello"
           base_dir=$(pwd)
+          result=true
           for p in `find . -name go.mod | xargs dirname`; do
-            echo $p;
-            echo $base_dir
-            echo $(pwd)
             cd $p;
-            go fmt;
+            [ -z "$(gofmt -l .)" ] || result=false;
             cd $base_dir;
           done
+          [ $result = false ] || exit 1
 
   test:
     runs-on: ubuntu-latest
@@ -65,15 +60,11 @@ jobs:
 
       - name: Test
         run: |
-          pwd
-          ls
           cd api_sample
           base_dir=$(pwd)
+          result=true
           for p in `find . -name go.mod | xargs dirname`; do
-            echo $p;
-            echo $base_dir
-            echo $(pwd)
             cd $p;
-            go test;
+            go test -v;
             cd $base_dir;
           done

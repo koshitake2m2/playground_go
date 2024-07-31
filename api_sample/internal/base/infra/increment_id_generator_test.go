@@ -6,7 +6,7 @@ import (
 )
 
 func TestGenerate(t *testing.T) {
-	g := infra.NewIncrementIdGeneratorAsIdGenerator()
+	g := infra.NewIncrementIdGenerator()
 	if g.Generate() != 1 {
 		t.Fatal("generate() should be 1")
 	}
