@@ -4,11 +4,9 @@
 name: api_sample
 
 on:
-  pull_request:
-    branches: ["main"]
+  # pull_request:
+  #   branches: ["main"]
   workflow_dispatch:
-  push:
-    branches: ["main"]
 jobs:
   build:
     runs-on: ubuntu-latest
