@@ -44,7 +44,14 @@ jobs:
           find . -name go.mod | xargs dirname
           echo "hello"
           base_dir=$(pwd)
-          for p in `find . -name go.mod | xargs dirname`; do echo $p; cd $p; go fmt; cd $base_dir; done
+          for p in `find . -name go.mod | xargs dirname`; do
+            echo $p;
+            echo $base_dir
+            echo $(pwd)
+            cd $p;
+            go fmt;
+            cd $base_dir;
+          done
 
   test:
     runs-on: ubuntu-latest
@@ -62,4 +69,11 @@ jobs:
           ls
           cd api_sample
           base_dir=$(pwd)
-          for p in `find . -name go.mod | xargs dirname`; do echo $p; cd $p; go test; cd $base_dir; done
+          for p in `find . -name go.mod | xargs dirname`; do
+            echo $p;
+            echo $base_dir
+            echo $(pwd)
+            cd $p;
+            go test;
+            cd $base_dir;
+          done
