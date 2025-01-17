@@ -9,6 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
+type contextKey string
+
+const txKey contextKey = "tx"
+
 func main() {
 
 	ctx := context.Background()
@@ -19,7 +23,7 @@ func main() {
 		PreferSimpleProtocol: true,
 	}), &gorm.Config{})
 	tx := db.Begin()
-	ctx = context.WithValue(ctx, "tx", tx)
+	ctx = context.WithValue(ctx, txKey, tx)
 
 	Create(ctx)
 
