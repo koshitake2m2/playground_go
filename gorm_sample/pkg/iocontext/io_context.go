@@ -24,6 +24,13 @@ func (i *GormIOContextHelpler) Transaction(f func(tx *gorm.DB) error) error {
 
 	tx := db.Begin()
 	ferr := f(tx)
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			panic(r)
+		}
+	}()
+
 	if ferr != nil {
 		tx.Rollback()
 	} else {

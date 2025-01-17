@@ -26,14 +26,14 @@ func main() {
 
 	// Commit
 	tx := db.WithContext(ctx).Begin()
-	newCtx := context.WithValue(ctx, txKey, tx)
-	Create(newCtx, 1)
+	ctxWithTx := context.WithValue(ctx, txKey, tx)
+	Create(ctxWithTx, 1)
 	tx.Commit()
 
 	// Rollback
 	tx2 := db.WithContext(ctx).Begin()
-	newCtx2 := context.WithValue(ctx, txKey, tx2)
-	Create(newCtx2, 2)
+	ctxWithTx2 := context.WithValue(ctx, txKey, tx2)
+	Create(ctxWithTx2, 2)
 	tx2.Rollback()
 
 }
