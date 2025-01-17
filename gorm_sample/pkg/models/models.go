@@ -20,3 +20,8 @@ type User struct {
 	Name string
 	Age  int
 }
+
+type Animal struct {
+	ID   string `gorm:"primarykey"`
+	Name string
+}
