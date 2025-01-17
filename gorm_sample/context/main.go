@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"gorm_sample/pkg/models"
 
 	"github.com/google/uuid"
@@ -22,20 +23,26 @@ func main() {
 		DSN:                  "host=localhost user=postgres password=postgres dbname=mydb port=5432 sslmode=disable TimeZone=Asia/Tokyo",
 		PreferSimpleProtocol: true,
 	}), &gorm.Config{})
-	tx := db.Begin()
-	ctx = context.WithValue(ctx, txKey, tx)
 
-	Create(ctx)
-
+	// Commit
+	tx := db.WithContext(ctx).Begin()
+	newCtx := context.WithValue(ctx, txKey, tx)
+	Create(newCtx, 1)
 	tx.Commit()
+
+	// Rollback
+	tx2 := db.WithContext(ctx).Begin()
+	newCtx2 := context.WithValue(ctx, txKey, tx2)
+	Create(newCtx2, 2)
+	tx2.Rollback()
 
 }
 
-func Create(ctx context.Context) error {
+func Create(ctx context.Context, n int64) error {
 	uuid, _ := uuid.NewV7()
 
-	tx := ctx.Value("tx").(*gorm.DB)
-	tx.Create(&models.Animal{ID: uuid.String(), Name: "Pero in Context"})
+	tx := ctx.Value(txKey).(*gorm.DB)
+	tx.Create(&models.Animal{ID: uuid.String(), Name: fmt.Sprintf("Pero in Context %d", n)})
 
 	return nil
 }
