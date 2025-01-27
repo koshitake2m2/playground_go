@@ -26,3 +26,6 @@ tmp
 
 # sqlite3
 *.db
+
+# IDEA, GoLand
+.idea
