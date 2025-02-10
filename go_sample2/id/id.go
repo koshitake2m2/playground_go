@@ -25,6 +25,9 @@ func (u *User) Id() Id[User, string] {
 type Animal struct{}
 type Shape struct{}
 
+type AppleId string
+type BananaId string
+
 func main() {
 	userId1 := NewId[User, string]("1")
 	userId1_2 := NewId[User]("1")
@@ -39,5 +42,13 @@ func main() {
 	fmt.Println("userId1 == userId2:", userId1 == userId2)     // false
 	// fmt.Println("userId1 == animalId1:", userId1 == animalId1) // compile error
 	// fmt.Println("userId1 == shapeId1:", userId1 == shapeId1) // compile error
+
+	appleId1 := AppleId("1")
+	appleId1_2 := AppleId("1")
+	bananaId1 := BananaId("1")
+	fmt.Printf("appleId1: %v\n", appleId1)
+	fmt.Printf("bananaId1: %v\n", bananaId1)
+	fmt.Println("appleId1 == appleId1_2:", appleId1 == appleId1_2) // true
+	// fmt.Println("appleId == bananaId:", appleId1 == bananaId1) // compile error
 
 }
