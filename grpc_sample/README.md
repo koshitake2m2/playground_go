@@ -10,6 +10,8 @@ protoc --go_out=. --go_opt=paths=source_relative \
 go run ./server
 go run ./client
 go run ./sample
+
+grpcurl -plaintext -d '{"name": "Alice"}' localhost:50051 greet.GreetService/SayHello
 ```
 
 ## Setup

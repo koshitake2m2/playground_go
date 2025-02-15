@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"google.golang.org/grpc/reflection"
 	"net"
 
 	"example.com/aaa/greet"
@@ -22,6 +23,7 @@ func main() {
 
 	s := grpc.NewServer()
 	greet.RegisterGreetServiceServer(s, greetService)
+	reflection.Register(s)
 
 	lis, _ := net.Listen("tcp", ":50051")
 	fmt.Printf("Server started at %s\n", lis.Addr().String())
