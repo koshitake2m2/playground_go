@@ -12,6 +12,9 @@ import (
 	// "example.com/aaa/cmd" imported as main and not used compiler UnusedImport
 	// "example.com/aaa/cmd"
 	"example.com/aaa/cmd/cmdutil"
+
+	// "example.com/ccc" // import cycle not allowedgo list
+	"example.com/ccc/cc2"
 )
 
 func PrintAB() {
@@ -24,4 +27,11 @@ func PrintAB() {
 
 	// Oh, we can import package in cmd which is not main package.
 	cmdutil.Hello()
+
+	// ccc.PrintC()
+	cc2.PrintC2()
+}
+
+func PrintB() {
+	fmt.Println("B")
 }

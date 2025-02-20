@@ -11,6 +11,13 @@ go mod edit -replace example.com/aaa=../aaa
 go mod tidy
 ```
 
+## Module Dependency
+
+- aaa
+- bbb → aaa, ccc
+- ccc → aaa, bbb
+- main → aaa, bbb, ccc
+
 ## Run
 
 ```bash
