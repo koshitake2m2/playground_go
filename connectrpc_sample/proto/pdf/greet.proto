@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "example.com/aaa/gen/proto/pdf";
+
+package pdf;
+
+service PdfService {
+  rpc GetPdf (PdfRequest) returns (stream PdfChunk);
+}
+
+message PdfRequest {
+  string filename = 1;
+}
+
+message PdfChunk {
+  bytes content = 1;
+}

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "example.com/aaa/gen/greet";
+option go_package = "example.com/aaa/gen/proto/greet";
 
 package greet;
 

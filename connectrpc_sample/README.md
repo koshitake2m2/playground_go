@@ -12,6 +12,11 @@ grpcurl \
     -protoset <(buf build -o -) -plaintext \
     -d '{"name": "Alice"}' \
     localhost:50051 greet.GreetService/SayHello
+
+grpcurl \
+    -protoset <(buf build -o -) -plaintext \
+    -d '{"filename": "hello.pdf"}' \
+    localhost:50051 pdf.PdfService/GetPdf | jq -r '.content' | base64 -d > ~/Downloads/output.pdf
 ```
 
 ## Setup
