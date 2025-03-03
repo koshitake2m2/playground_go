@@ -29,3 +29,6 @@ tmp
 
 # IDEA, GoLand
 .idea
+
+# schema
+playground_schema/

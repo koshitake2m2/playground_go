@@ -1,5 +1,9 @@
 # connectrpc_sample
 
+## Dependencies
+
+- https://github.com/koshitake2m2/playground_schema.git
+
 ## Tips
 
 ```bash
@@ -20,6 +24,10 @@ grpcurl \
 ```
 
 ## Setup
+
+```bash
+git clone https://github.com/koshitake2m2/playground_schema.git
+```
 
 ```bash
 go install github.com/bufbuild/buf/cmd/buf@latest
