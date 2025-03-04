@@ -1,6 +1,5 @@
 # go_sample
 
-## Run
-
 ```bash
+go generate ./...
 ```
