@@ -25,7 +25,7 @@ func (v *valueObject[T]) Value() T {
 	return v.value
 }
 
-// FIXME: This is not a good way to compare two different type value objects.
+// FIXME: You can compare two different type value objects.
 func (v *valueObject[T]) Equals(other ValueObject[T]) bool {
 	return reflect.DeepEqual(v.Value(), other.Value())
 }
