@@ -18,7 +18,7 @@ func main() {
 	fmt.Println("age == age3: ", age == age3) // false
 
 	year := NewYear(20)
-	// fmt.Println("age.Equals(age22): ", age.Equals(year)) // compile error
+	// fmt.Println("age.Equals(year): ", age.Equals(year)) // compile error
 	fmt.Println("age == year: ", age == year) // OMG! compile success
 	nextAge := NextAge(year)                  // OMG! compile success
 	fmt.Println("nextAge: ", nextAge)

@@ -1,11 +1,11 @@
 package main
 
 type UserAge struct {
-	ValueObject[int64]
+	ValueObject[int64, UserAge]
 }
 
 func NewUserAge(age int64) UserAge {
-	return UserAge{NewValueObject(age)}
+	return UserAge{NewValueObject[int64, UserAge](age)}
 }
 
 func NextAge(age UserAge) UserAge {
@@ -13,9 +13,9 @@ func NextAge(age UserAge) UserAge {
 }
 
 type Year struct {
-	ValueObject[int64]
+	ValueObject[int64, Year]
 }
 
 func NewYear(age int64) Year {
-	return Year{NewValueObject(age)}
+	return Year{NewValueObject[int64, Year](age)}
 }

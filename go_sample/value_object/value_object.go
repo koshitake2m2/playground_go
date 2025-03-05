@@ -6,30 +6,35 @@ import (
 )
 
 type (
-	ValueObject[T any] interface {
+	ValueObject[T any, S any] interface {
 		Value() T
-		Equals(other ValueObject[T]) bool
+		// Equals(other S) bool
 		String() string
+		Show() string
 	}
 
-	valueObject[T any] struct {
+	valueObject[T any, S ValueObject[T, S]] struct {
 		value T
 	}
 )
 
-func NewValueObject[T any](v T) ValueObject[T] {
-	return &valueObject[T]{value: v}
+func NewValueObject[T any, S ValueObject[T, S]](v T) ValueObject[T, S] {
+	return valueObject[T, S]{value: v}
 }
 
-func (v *valueObject[T]) Value() T {
+func (v valueObject[T, S]) Value() T {
 	return v.value
 }
 
-// FIXME: You can compare two different type value objects.
-func (v *valueObject[T]) Equals(other ValueObject[T]) bool {
-	return reflect.DeepEqual(v.Value(), other.Value())
+// NOTE: You can use `==` operator instead of `Equals` method.
+// func (v valueObject[T, S]) Equals(other S) bool {
+// 	return reflect.DeepEqual(v.Value(), other.Value())
+// }
+
+func (v valueObject[T, S]) String() string {
+	return fmt.Sprintf("%v", v.value)
 }
 
-func (v *valueObject[T]) String() string {
-	return fmt.Sprintf("%v", v.value)
+func (v valueObject[T, S]) Show() string {
+	return fmt.Sprintf("%v(%v)", reflect.TypeOf((*S)(nil)).Elem(), v.value)
 }
