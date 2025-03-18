@@ -3,11 +3,25 @@ package main
 import (
 	"fmt"
 	"time"
+	_ "time/tzdata"
 )
 
 func main() {
+	now()
 	parseDate()
 	addMonth()
+}
+
+func now() {
+	now := time.Now()
+	fmt.Println(now) // JST
+
+	jst, _ := time.LoadLocation("Asia/Tokyo")
+	now = time.Now().In(jst)
+	fmt.Println(now) // JST
+
+	now = time.Now().UTC()
+	fmt.Println(now) // UTC
 }
 
 func parseDate() {
