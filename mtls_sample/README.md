@@ -8,62 +8,17 @@
 brew install openssl
 ```
 
-### ルートCA
+### 証明書作成
 
 ```bash
-# CA秘密鍵
-openssl genrsa -out ca.key 4096
-
-# CA証明書（自己署名）
-openssl req -x509 -new -sha256 -days 3650 \
-  -key ca.key -out ca.crt \
-  -subj "/CN=Local Dev CA"
+make
 ```
 
-### サーバー証明書
+以下の3種類の証明書を作成する。
 
-```bash
-# サーバ鍵とCSR
-openssl genrsa -out server.key 2048
-openssl req -new -key server.key -out server.csr \
-  -subj "/CN=localhost"
-
-# 拡張設定（SAN と EKU）
-cat > server.ext <<'EOF'
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, keyEncipherment
-extendedKeyUsage = serverAuth
-subjectAltName = @alt_names
-[alt_names]
-DNS.1 = localhost
-EOF
-
-# CAで署名
-openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key \
-  -CAcreateserial -out server.crt -days 825 -sha256 \
-  -extfile server.ext
-```
-
-### クライアント証明書
-
-```bash
-# クライアント鍵とCSR
-openssl genrsa -out client.key 2048
-openssl req -new -key client.key -out client.csr \
-  -subj "/CN=Local Client"
-
-# 拡張設定（clientAuth）
-cat > client.ext <<'EOF'
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, keyEncipherment
-extendedKeyUsage = clientAuth
-EOF
-
-# CAで署名
-openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key \
-  -CAcreateserial -out client.crt -days 825 -sha256 \
-  -extfile client.ext
-```
+- ルートCA
+- サーバー証明書
+- クライアント証明書
 
 ### 動作確認
 
@@ -80,8 +35,10 @@ openssl s_server -accept 8443 -www \
 curl https://localhost:8443/ \
   --cacert ca.crt \
   --cert client.crt \
-  --key client.key -v
+  --key client.key
 ```
+
+### Tips
 
 ```bash
 # 証明書の内容確認と検証
@@ -93,15 +50,13 @@ openssl verify -CAfile ca.crt server.crt client.crt
 ### Server
 
 ```bash
-cd server
-go run .
+make server-run
 ```
 
 ### Client
 
 ```bash
-cd client
-go run.
+make client-run
 ```
 
 ```bash

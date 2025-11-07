@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -51,7 +52,13 @@ func main() {
 		if r.TLS != nil && len(r.TLS.PeerCertificates) > 0 {
 			cn = r.TLS.PeerCertificates[0].Subject.CommonName
 		}
-		fmt.Fprintf(w, "mTLS OK. Hello, %s!\n", cn)
+		w.Header().Set("Content-Type", "application/json")
+		resp := map[string]string{
+			"message": fmt.Sprintf("mTLS OK. Hello, %s!", cn),
+		}
+		if err := json.NewEncoder(w).Encode(resp); err != nil {
+			http.Error(w, "encode response failed", http.StatusInternalServerError)
+		}
 	})
 
 	srv := &http.Server{

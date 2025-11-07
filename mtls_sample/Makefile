@@ -6,25 +6,31 @@ certs: root-ca server-cert client-cert
 
 .PHONY: root-ca
 root-ca:
+	# CA秘密鍵
 	openssl genrsa -out ca.key 4096
+	# CA証明書（自己署名）
 	openssl req -x509 -new -sha256 -days 3650 \
 		-key ca.key -out ca.crt \
 		-subj "/CN=Local Dev CA"
 
 .PHONY: server-cert
 server-cert:
+	# サーバ鍵とCSR
 	openssl genrsa -out server.key 2048
 	openssl req -new -key server.key -out server.csr \
 		-subj "/CN=localhost"
+	# CAで署名（server.extでSAN/EKU指定）
 	openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key \
 		-CAcreateserial -out server.crt -days 825 -sha256 \
 		-extfile server.ext
 
 .PHONY: client-cert
 client-cert:
+	# クライアント鍵とCSR
 	openssl genrsa -out client.key 2048
 	openssl req -new -key client.key -out client.csr \
 		-subj "/CN=Local Client"
+	# CAで署名（client.extでclientAuth指定）
 	openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key \
 		-CAcreateserial -out client.crt -days 825 -sha256 \
 		-extfile client.ext
