@@ -2,7 +2,7 @@
 all: certs
 
 .PHONY: certs
-certs: root-ca server-cert client-cert
+certs: root-ca server-cert client-cert client2-cert
 
 .PHONY: root-ca
 root-ca:
@@ -35,6 +35,17 @@ client-cert:
 		-CAcreateserial -out client.crt -days 825 -sha256 \
 		-extfile client.ext
 
+.PHONY: client2-cert
+client2-cert:
+	# client2 鍵とCSR
+	openssl genrsa -out client2.key 2048
+	openssl req -new -key client2.key -out client2.csr \
+		-subj "/CN=Local Client 2"
+	# CAで署名（client2.extでclientAuth指定）
+	openssl x509 -req -in client2.csr -CA ca.crt -CAkey ca.key \
+		-CAcreateserial -out client2.crt -days 825 -sha256 \
+		-extfile client2.ext
+
 .PHONY: server-run
 server-run:
 	cd server && TLS_CERT=../server.crt TLS_KEY=../server.key TLS_CA=../ca.crt go run .
@@ -43,8 +54,13 @@ server-run:
 client-run:
 	cd client && TLS_CLIENT_CERT=../client.crt TLS_CLIENT_KEY=../client.key TLS_CA=../ca.crt go run .
 
+.PHONY: client2-run
+client2-run:
+	cd client2 && TLS_CLIENT_CERT=../client2.crt TLS_CLIENT_KEY=../client2.key TLS_CA=../ca.crt go run .
+
 .PHONY: clean
 clean:
 	rm -f ca.key ca.crt ca.srl \
 		server.key server.csr server.crt \
-		client.key client.csr client.crt
+		client.key client.csr client.crt \
+		client2.key client2.csr client2.crt

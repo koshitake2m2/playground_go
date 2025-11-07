@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -54,8 +53,11 @@ func main() {
 		}
 		w.Header().Set("Content-Type", "application/json")
 		resp := map[string]string{
-			"message": fmt.Sprintf("mTLS OK. Hello, %s!", cn),
+			"client":  cn,
+			"message": "mTLS OK. Hello World!",
 		}
+		leaf := r.TLS.PeerCertificates[0]
+		log.Printf("[server] served request from client CN=%s, SAN=%v", leaf.Subject.CommonName, leaf.DNSNames)
 		if err := json.NewEncoder(w).Encode(resp); err != nil {
 			http.Error(w, "encode response failed", http.StatusInternalServerError)
 		}

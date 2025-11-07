@@ -1,18 +1,12 @@
 # mtls_sample
 
-## Setup
-
-### Install
+## Install
 
 ```bash
 brew install openssl
 ```
 
-### 証明書作成
-
-```bash
-make
-```
+## Setup
 
 以下の3種類の証明書を作成する。
 
@@ -20,10 +14,29 @@ make
 - サーバー証明書
 - クライアント証明書
 
-### 動作確認
+```bash
+make
+```
+
+## 実行
+
+### Server
 
 ```bash
-# 簡易的なTLSサーバ実行（8443で待受）
+make server-run
+```
+
+### Client
+
+```bash
+make client-run
+make client2-run
+```
+
+### 簡易動作確認
+
+```bash
+# 簡易的なTLSサーバ実行
 openssl s_server -accept 8443 -www \
   -cert server.crt -key server.key \
   -CAfile ca.crt -Verify 1
@@ -43,25 +56,4 @@ curl https://localhost:8443/ \
 ```bash
 # 証明書の内容確認と検証
 openssl verify -CAfile ca.crt server.crt client.crt
-```
-
-## 実行
-
-### Server
-
-```bash
-make server-run
-```
-
-### Client
-
-```bash
-make client-run
-```
-
-```bash
-curl https://localhost:8443 \
-  --cert client.crt \
-  --key client.key \
-  --cacert ca.crt
 ```
