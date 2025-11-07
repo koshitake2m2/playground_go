@@ -48,16 +48,26 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		cn := "(none)"
+		spiffeID := "(none)"
+		var peer *x509.Certificate
 		if r.TLS != nil && len(r.TLS.PeerCertificates) > 0 {
-			cn = r.TLS.PeerCertificates[0].Subject.CommonName
+			peer = r.TLS.PeerCertificates[0]
+			cn = peer.Subject.CommonName
+			if len(peer.URIs) > 0 && peer.URIs[0] != nil {
+				spiffeID = peer.URIs[0].String()
+			}
 		}
 		w.Header().Set("Content-Type", "application/json")
 		resp := map[string]string{
-			"client":  cn,
-			"message": "mTLS OK. Hello World!",
+			"client_cn": cn,
+			"spiffe_id": spiffeID,
+			"message":   "mTLS OK. Hello, World!",
 		}
-		leaf := r.TLS.PeerCertificates[0]
-		log.Printf("[server] served request from client CN=%s, SAN=%v", leaf.Subject.CommonName, leaf.DNSNames)
+		if peer != nil {
+			log.Printf("[server] served request CN=%s SPIFFE=%s SANs=%v", peer.Subject.CommonName, spiffeID, peer.DNSNames)
+		} else {
+			log.Printf("[server] served request without peer certificate details")
+		}
 		if err := json.NewEncoder(w).Encode(resp); err != nil {
 			http.Error(w, "encode response failed", http.StatusInternalServerError)
 		}

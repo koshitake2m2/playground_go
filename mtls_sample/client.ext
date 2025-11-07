@@ -1,3 +1,6 @@
 basicConstraints=CA:FALSE
 keyUsage = digitalSignature, keyEncipherment
 extendedKeyUsage = clientAuth
+subjectAltName = @alt_names
+[alt_names]
+URI.1 = spiffe://example.org/client
