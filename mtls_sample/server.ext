@@ -4,4 +4,6 @@ extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = localhost
-URI.1 = spiffe://example.org/server
+IP.1 = 127.0.0.1
+email.1 = server@example.com
+URI.1 = spiffe://example.com/server

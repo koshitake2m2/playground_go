@@ -49,22 +49,36 @@ func main() {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		cn := "(none)"
 		spiffeID := "(none)"
-		var peer *x509.Certificate
+		var (
+			peer     *x509.Certificate
+			dnsNames []string
+			ipAddrs  []string
+			emails   []string
+		)
 		if r.TLS != nil && len(r.TLS.PeerCertificates) > 0 {
 			peer = r.TLS.PeerCertificates[0]
 			cn = peer.Subject.CommonName
 			if len(peer.URIs) > 0 && peer.URIs[0] != nil {
 				spiffeID = peer.URIs[0].String()
 			}
+			dnsNames = append([]string{}, peer.DNSNames...)
+			for _, ip := range peer.IPAddresses {
+				ipAddrs = append(ipAddrs, ip.String())
+			}
+			emails = append([]string{}, peer.EmailAddresses...)
 		}
 		w.Header().Set("Content-Type", "application/json")
-		resp := map[string]string{
+		resp := map[string]any{
 			"client_cn": cn,
 			"spiffe_id": spiffeID,
+			"dns_names": dnsNames,
+			"ip_addrs":  ipAddrs,
+			"emails":    emails,
 			"message":   "mTLS OK. Hello, World!",
 		}
 		if peer != nil {
-			log.Printf("[server] served request CN=%s SPIFFE=%s SANs=%v", peer.Subject.CommonName, spiffeID, peer.DNSNames)
+			log.Printf("[server] served request CN=%s SPIFFE=%s DNS=%v IP=%v email=%v",
+				peer.Subject.CommonName, spiffeID, dnsNames, ipAddrs, emails)
 		} else {
 			log.Printf("[server] served request without peer certificate details")
 		}
