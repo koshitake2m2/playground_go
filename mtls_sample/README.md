@@ -23,14 +23,14 @@ make
 ### Server
 
 ```bash
-make server-run
+make run-server
 ```
 
 ### Client
 
 ```bash
-make client-run
-make client2-run
+make run-client
+make run-client2
 ```
 
 ### 簡易動作確認

@@ -46,16 +46,16 @@ client2-cert:
 		-CAcreateserial -out client2.crt -days 825 -sha256 \
 		-extfile client2.ext
 
-.PHONY: server-run
-server-run:
+.PHONY: run-server
+run-server:
 	cd server && TLS_CERT=../server.crt TLS_KEY=../server.key TLS_CA=../ca.crt go run .
 
-.PHONY: client-run
-client-run:
+.PHONY: run-client
+run-client:
 	cd client && TLS_CLIENT_CERT=../client.crt TLS_CLIENT_KEY=../client.key TLS_CA=../ca.crt go run .
 
-.PHONY: client2-run
-client2-run:
+.PHONY: run-client2
+run-client2:
 	cd client2 && TLS_CLIENT_CERT=../client2.crt TLS_CLIENT_KEY=../client2.key TLS_CA=../ca.crt go run .
 
 .PHONY: clean
