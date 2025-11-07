@@ -68,7 +68,7 @@ openssl x509 -req -in client.csr -CA ca.crt -CAkey ca.key \
 ### 動作確認
 
 ```bash
-# 別ターミナルAで実行（8443で待受）
+# 簡易的なTLSサーバ実行（8443で待受）
 openssl s_server -accept 8443 -www \
   -cert server.crt -key server.key \
   -CAfile ca.crt -Verify 1
@@ -105,7 +105,7 @@ go run.
 ```
 
 ```bash
-curl https://localhost:9443 \
+curl https://localhost:8443 \
   --cert client.crt \
   --key client.key \
   --cacert ca.crt

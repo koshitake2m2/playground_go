@@ -20,7 +20,7 @@ func main() {
 	certFile := mustGetenv("TLS_CERT", "../server.crt")
 	keyFile := mustGetenv("TLS_KEY", "../server.key")
 	caFile := mustGetenv("TLS_CA", "../ca.crt")
-	addr := mustGetenv("LISTEN_ADDR", ":9443")
+	addr := mustGetenv("LISTEN_ADDR", ":8443")
 
 	// サーバ証明書
 	cert, err := tls.LoadX509KeyPair(certFile, keyFile)

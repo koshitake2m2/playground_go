@@ -24,7 +24,7 @@ func main() {
 	certFile := getenv("TLS_CLIENT_CERT", "../client.crt")
 	keyFile := getenv("TLS_CLIENT_KEY", "../client.key")
 	caFile := getenv("TLS_CA", "../ca.crt")
-	url := getenv("SERVER_URL", "https://localhost:9443/")
+	url := getenv("SERVER_URL", "https://localhost:8443/")
 	retries, _ := strconv.Atoi(getenv("RETRIES", "20"))
 	sleepSecs, _ := strconv.Atoi(getenv("SLEEP_SECS", "1"))
 
