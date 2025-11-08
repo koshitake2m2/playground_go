@@ -1,0 +1,15 @@
+# Go build outputs
+bin/
+server/server
+client/client
+
+# SPIRE runtime artifacts
+spire/data/
+spire/socket/
+spire-agent/sockets/
+spire/bootstrap/token
+spire/bootstrap/
+workload-api/
+
+# Editor/system files
+.DS_Store
