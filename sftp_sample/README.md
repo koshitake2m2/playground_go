@@ -31,3 +31,28 @@ make run-client
 ```
 
 クライアントは `sample.csv` ファイルをサーバーに送信します。
+
+### CLI
+
+```bash
+sftp -i client_key -P 12222 sftp-user@localhost <<EOF
+put sample.csv
+quit
+EOF
+```
+
+```bash
+sftp -i client_key -P 12222 sftp-user@localhost
+
+put sample.csv
+get sample.csv ./downloads/
+ls
+mkdir test_dir
+rmdir test_dir
+rename sample.csv sample2.csv
+symlink sample2.csv link.csv
+rm link.csv
+rm sample2.csv
+
+quit
+```

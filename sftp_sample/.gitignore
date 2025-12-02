@@ -2,4 +2,6 @@ client_key
 client_key.pub
 server_key
 server_key.pub
+
 uploads/
+downloads/

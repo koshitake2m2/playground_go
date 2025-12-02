@@ -25,7 +25,7 @@ func main() {
 	hostKeyFile := mustGetenv("SSH_HOST_KEY", "../server_key")
 	authorizedKeyFile := mustGetenv("SSH_AUTHORIZED_KEY", "../client_key.pub")
 	addr := mustGetenv("LISTEN_ADDR", ":12222")
-	uploadDir := mustGetenv("UPLOAD_DIR", "./uploads")
+	uploadDir := mustGetenv("UPLOAD_DIR", "../uploads")
 
 	if err := os.MkdirAll(uploadDir, 0755); err != nil {
 		log.Fatalf("create upload directory: %v", err)

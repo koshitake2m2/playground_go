@@ -23,7 +23,7 @@ func main() {
 	privateKeyFile := getenv("SSH_PRIVATE_KEY", "../client_key")
 	hostKeyFile := getenv("SSH_HOST_KEY", "../server_key.pub")
 	serverAddr := getenv("SERVER_ADDR", "localhost:12222")
-	csvFile := getenv("CSV_FILE", "sample.csv")
+	csvFile := getenv("CSV_FILE", "../sample.csv")
 
 	privateKey, err := os.ReadFile(privateKeyFile)
 	if err != nil {

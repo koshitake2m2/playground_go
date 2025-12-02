@@ -1,8 +1,12 @@
 .PHONY: all
-all: ssh-keys
+all: ssh-keys prepare-tmp-dir
 
 .PHONY: ssh-keys
 ssh-keys: server-key client-key
+
+.PHONY: prepare-tmp-dir
+prepare-tmp-dir:
+	mkdir -p downloads
 
 .PHONY: server-key
 server-key:
@@ -30,5 +34,6 @@ run-client:
 clean:
 	rm -rf server_key server_key.pub \
 		client_key client_key.pub \
-		server/uploads
-
+		uploads downloads
+	# sftp -i client_key -P 12222 sftp-user@localhost をしてた場合, known_hosts の該当部分を削除
+	ssh-keygen -R "[localhost]:12222"
