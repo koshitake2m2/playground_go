@@ -13,10 +13,10 @@ mkdir -p ./keys
 
 cat > ./tmp/gpg_batch.txt << EOF
 %no-protection
-Key-Type: RSA
-Key-Length: 4096
-Subkey-Type: RSA
-Subkey-Length: 4096
+Key-Type: EdDSA
+Key-Curve: ed25519
+Subkey-Type: ECDH
+Subkey-Curve: cv25519
 Name-Real: Test User
 Name-Email: test@example.com
 Expire-Date: 0
