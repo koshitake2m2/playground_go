@@ -1,7 +1,7 @@
 builds:
-- id: sevenzip_sample
-  main: ./main.go
-  env:
-  - CGO_ENABLED=0
-  - GOOS=linux
-  - GOARCH=amd64
+  - id: sevenzip_sample
+    main: ./main.go
+    env:
+      - CGO_ENABLED=0
+      - GOOS=linux
+      - GOARCH=amd64
