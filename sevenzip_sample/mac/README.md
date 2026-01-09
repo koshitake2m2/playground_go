@@ -1,4 +1,4 @@
-# macos local execution
+# Execute on macOS
 
 ## Setup
 

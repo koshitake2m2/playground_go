@@ -1,4 +1,4 @@
-# Ko build
+# Build with Ko
 
 ## Setup
 
