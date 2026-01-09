@@ -3,6 +3,7 @@
 ## Setup
 
 ```bash
+cd sevenzip_sample/mac
 mkdir bin
 curl -L https://github.com/ip7z/7zip/releases/download/25.01/7z2501-mac.tar.xz -o bin/7z2501-mac.tar.xz
 cd bin

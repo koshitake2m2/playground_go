@@ -5,6 +5,7 @@
 Build the Docker image:
 
 ```bash
+cd sevenzip_sample/dockerfile_build
 docker build -t sevenzip-docker .
 ```
 

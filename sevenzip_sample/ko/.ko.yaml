@@ -1,0 +1,9 @@
+defaultBaseImage: gcr.io/distroless/static:nonroot
+
+builds:
+- id: sevenzip-ko
+  main: .
+  env:
+  - CGO_ENABLED=0
+  - GOOS=linux
+  - GOARCH=amd64
